@@ -56,8 +56,9 @@ Choose K assets from n candidates to minimize portfolio risk, where risk include
 | 200 assets, pick 40 | 195.65 | 1,621.60 | **195.65** (exact match) | 8s |
 | 300 assets, pick 60 | 1,786.37 | 6,196.71 | **1,786.37** (exact match) | 3s |
 | 500 assets, pick 100 | 13,949.80 | 34,454.01 | **13,950.07** (match) | 33s |
+| 1000 assets, pick 200 | 101,294.43 | 190,598.71 | **101,294.43** (exact match) | 276s |
 
-> Lower = better (portfolio risk). HAMD uses a **60-second CPU budget** per instance. SA/Tabu quadratize the cubic objective (n -> 5n variables), inflating problem size and producing results 60-88% worse. Our solver matches HAMD's dedicated optimizer while being a general-purpose HUBO solver.
+> Lower = better (portfolio risk). HAMD uses a **60-second CPU budget** per instance. SA/Tabu quadratize the cubic objective (n -> 5n variables), inflating problem size and producing results 60-88% worse. Our solver matches HAMD's dedicated optimizer at every scale while being a general-purpose HUBO solver.
 
 ---
 
