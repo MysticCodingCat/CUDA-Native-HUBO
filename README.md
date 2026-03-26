@@ -44,21 +44,20 @@ Select items to maximize total value under a weight capacity constraint -- but i
 
 ---
 
-### 2. Cubic Portfolio Optimization -- **Beats Dedicated Solver**
+### 2. Cubic Portfolio Optimization -- **Matches Dedicated Solver**
 
 **What is this?**
 Choose K assets from n candidates to minimize portfolio risk, where risk includes **3-asset co-skewness** (cubic terms). This models real financial risk that traditional mean-variance (Markowitz) frameworks cannot capture.
 
 **Baseline:** [HAMD (arXiv:2603.15947)](https://arxiv.org/abs/2603.15947) -- a dedicated optimizer designed specifically for this problem. Their SA/Tabu baselines use quadratization (n -> 5n variables), resulting in 80-88% worse solutions.
 
-| Scale | HAMD (dedicated) | **Ours (general-purpose)** | Speed |
-|-------|------------------|--------------------|-------|
-| 200 assets, pick 40 | -195.65 | **-195.65** (match) | **4x faster** |
-| 300 assets, pick 60 | -1786.37 | **-1786.37** (match) | **19x faster** |
-| 500 assets, pick 100 | -13950.07 | **-13949.71** (better) | Comparable |
-| 1000 assets, pick 200 | -112822.41 | **-101294.43 (+10.2%)** | -- |
+| Scale | HAMD (dedicated) | SA/Tabu (quadratized) | **Ours** | Our Time |
+|-------|------------------|----------------------|----------|----------|
+| 200 assets, pick 40 | 195.65 | 1,621.60 | **195.65** (exact match) | 8s |
+| 300 assets, pick 60 | 1,786.37 | 6,196.71 | **1,786.37** (exact match) | 3s |
+| 500 assets, pick 100 | 13,949.80 | 34,454.01 | **13,950.07** (match) | 33s |
 
-> Values represent portfolio risk (negative, lower magnitude = better). At 1000 assets, our general-purpose solver outperforms their specialized optimizer by 10.2%.
+> Lower = better (portfolio risk). HAMD uses a **60-second CPU budget** per instance. SA/Tabu quadratize the cubic objective (n -> 5n variables), inflating problem size and producing results 60-88% worse. Our solver matches HAMD's dedicated optimizer while being a general-purpose HUBO solver.
 
 ---
 
@@ -96,7 +95,7 @@ Find the largest set of nodes in a graph such that no two are connected. A funda
 | Scenario | Quadratization Approach | Our Native Approach |
 |----------|------------------------|-------------------|
 | 3-way drug interactions | Must add auxiliary variables, problem size 3-5x larger | Handles directly, original problem size |
-| Portfolio co-skewness | 80-88% quality degradation (verified) | Full quality, 4-19x faster |
+| Portfolio co-skewness | 80-88% quality degradation (verified) | Full quality, matches dedicated solver |
 | Manufacturing synergies | Approximation errors compound | Exact cubic evaluation |
 | Any cubic/quartic objective | Reformulation expertise required | Just input the problem |
 
