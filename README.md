@@ -28,17 +28,17 @@ Select items to maximize total value under a weight capacity constraint -- but i
 
 - **Source:** [Forrester & Waddell 2022](https://doi.org/10.1007/s10878-021-00816-5), 52 instances, n=40 to 200 items
 - **Our result:** All 52 best-known solutions matched, **6 new best-known solutions discovered**
-- **Time:** 22 minutes total for all 52 instances
+- **Time:** **8.6 minutes total** for all 52 instances (max 60s per instance)
 
-| Solver | Hardware | Cost | Matched |
-|--------|----------|------|---------|
-| **Ours** | **RTX 3060 Ti** | **~$400** | **52/52** |
-| DA-HUBO (Fujitsu) | Digital Annealer | ~$1M | 52/52 |
-| DA-QUBO (Fujitsu) | Digital Annealer | ~$1M | 48/52 |
-| SA | CPU | -- | 44/52 |
-| Tabu Search | CPU | -- | 42/52 |
+| Solver | Hardware | Cost | Matched | Time Budget |
+|--------|----------|------|---------|-------------|
+| **Ours** | **RTX 3060 Ti** | **~$400** | **52/52** | **8.6 min total** |
+| DA-HUBO (Fujitsu) | Digital Annealer | ~$1M | 52/52 | 1800s per instance |
+| DA-QUBO (Fujitsu) | Digital Annealer | ~$1M | 48/52 | 1800s per instance |
+| SA | CPU | -- | 44/52 | 1800s per instance |
+| Tabu Search | CPU | -- | 42/52 | 1800s per instance |
 
-> Comparison data from [Queiroz et al. 2025 (GECCO)](https://doi.org/10.1145/3712256.3726380). DA-QUBO uses quadratization and loses 4 instances; our native cubic solver does not.
+> Comparison data from [Queiroz et al. 2025 (GECCO)](https://doi.org/10.1145/3712256.3726380). Fujitsu DA and all baselines use **1800 seconds (30 minutes) per instance**. Our solver finishes all 52 instances in under 9 minutes combined. DA-QUBO uses quadratization and loses 4 instances; our native cubic solver does not.
 
 **Full per-instance results:** [`results/paper_table.csv`](results/paper_table.csv)
 
