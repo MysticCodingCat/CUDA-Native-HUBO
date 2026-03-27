@@ -126,11 +126,24 @@ Find the largest set of nodes in a graph such that no two are connected. A funda
 
 ---
 
+## Where This Is Headed
+
+The benchmarks in this repository represent problems I have tested so far. Each non-CKP problem type -- cubic portfolio, QUBO, graph problems -- required less than a day of algorithm-level modification from the CKP prototype to produce competitive results. This suggests the framework adapts quickly across problem classes.
+
+I believe there are more problem domains where this approach will perform well, particularly anywhere that:
+- Higher-order (cubic+) interactions are present but currently handled through lossy quadratization
+- Problem-specific structure (constraint topology, variable dependencies) can be exploited algorithmically
+- Existing methods treat the problem as a black box
+
+I want to be honest: I have not tested everything, and the results above do not guarantee strong performance on every cubic problem. Some problem structures will fit this approach better than others. What I can say is that on every domain I have tested, adapting the algorithm to the problem's native structure consistently outperformed the quadratization baseline.
+
+---
+
 ## A Note on Technical Details
 
-The core algorithms and implementation are part of an ongoing paper submission and patent application. For this reason, source code and algorithmic specifics are not publicly disclosed at this time. This repository shares only benchmark results and problem instances.
+The core algorithms and implementation are part of an ongoing paper submission and patent application. Source code and algorithmic specifics are not publicly disclosed at this time.
 
-If you are a researcher or organization interested in collaboration or evaluation, feel free to reach out directly.
+I recognize that asking someone to take this seriously without seeing the code requires trust. My answer to that is simple: **let me run your problem.** If you have an optimization problem -- especially one with higher-order interactions -- send it to me and I will benchmark it and share the results. The outcomes will demonstrate what the algorithm can do more directly than any technical description I could give right now.
 
 ---
 
@@ -138,8 +151,8 @@ If you are a researcher or organization interested in collaboration or evaluatio
 
 If you have a combinatorial optimization problem -- especially one involving **cubic or higher-order interactions** -- I will benchmark it for free.
 
-You provide: problem description or QUBO/HUBO formulation
-I provide: solution quality, runtime, comparison with your current approach
+You provide: problem description, QUBO/HUBO formulation, or raw instance data
+I provide: solution quality, runtime, and honest comparison with your current approach (including cases where my solver does not win)
 
 **Po-Jung Chen (陳伯榕)**
 National Central University, Dept. of Computer Science and Information Engineering
