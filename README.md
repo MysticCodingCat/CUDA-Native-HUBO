@@ -12,6 +12,23 @@ Most optimization solvers today only handle **pairwise (2-body) interactions** -
 
 **Our solver skips quadratization entirely.** It operates directly on cubic (3-body) terms with the same efficiency that other solvers handle quadratic terms.
 
+### Why not just use a quantum annealer?
+
+Quantum annealers (D-Wave, Fujitsu Digital Annealer, IBM QUBO hardware) and most quantum-inspired solvers have a **fundamental architectural constraint: they only accept QUBO input**. This means any problem with cubic or higher-order terms *must* be converted to QUBO before it can be solved -- you have no choice, regardless of how much you pay.
+
+Our solver is software-native. This means:
+
+1. **No forced conversion.** The cubic structure of your problem is preserved end-to-end. The solver evaluates cubic interactions directly -- no auxiliary variables, no approximation overhead.
+
+2. **Problem-specific customization.** Because the solver is not a fixed hardware chip, it can be **specialized and tuned for your specific problem**. For example:
+   - The knapsack variant uses weight-matching move operators that preserve feasibility natively -- the search never wastes time on infeasible states.
+   - The portfolio variant exploits the equality constraint (pick exactly K assets) with dedicated swap moves.
+   - Constraint handling is coded directly into the search, not bolted on as penalties that the hardware must interpret.
+
+3. **Algorithm-level adaptability.** When a problem has a known structure (e.g., sparse interactions, specific constraint topology), we can exploit it. A quantum chip runs the same annealing schedule regardless of problem structure.
+
+The result: our $400 GPU outperforms a $1,000,000 quantum-inspired accelerator on the cubic knapsack benchmark -- not because the GPU is faster in raw FLOPS, but because the algorithm is tailored to the problem.
+
 ### How much does it cost?
 
 It runs on a **single NVIDIA RTX 3060 Ti** (~$400 USD, consumer-grade).
