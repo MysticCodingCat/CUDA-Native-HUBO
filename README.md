@@ -151,6 +151,19 @@ National Central University, Dept. of Computer Science and Information Engineeri
 
 ## References
 
-- Forrester & Waddell (2022): Cubic Knapsack Problem. *J. Comb. Optim.* 44(1):498-517
-- Queiroz et al. (2025): Digital Annealer for CKP. *GECCO* pp.890-897
-- HAMD (2026): Cubic portfolio optimizer. [arXiv:2603.15947](https://arxiv.org/abs/2603.15947)
+### Problem Descriptions (what these problems are)
+
+- **HUBO / Binary Optimization** -- [Wikipedia: Pseudo-boolean optimization](https://en.wikipedia.org/wiki/Pseudo-boolean_optimization)
+- **Knapsack Problem** -- [Wikipedia: Knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem) (CKP adds cubic synergy terms on top of the classic formulation)
+- **Portfolio Optimization** -- [Wikipedia: Modern portfolio theory](https://en.wikipedia.org/wiki/Modern_portfolio_theory) (HAMD extends this with cubic co-skewness terms)
+- **Maximum Cut (MaxCut)** -- [Wikipedia: Maximum cut](https://en.wikipedia.org/wiki/Maximum_cut)
+- **Maximum Independent Set (MIS)** -- [Wikipedia: Independent set (graph theory)](https://en.wikipedia.org/wiki/Independent_set_(graph_theory))
+- **QUBO** -- [Wikipedia: Quadratic unconstrained binary optimization](https://en.wikipedia.org/wiki/Quadratic_unconstrained_binary_optimization)
+
+### Benchmark Sources
+
+- Forrester & Waddell (2022): Cubic Knapsack Problem definition and instances. *J. Comb. Optim.* [DOI:10.1007/s10878-021-00816-5](https://doi.org/10.1007/s10878-021-00816-5)
+- Queiroz et al. (2025): Fujitsu Digital Annealer for CKP. *GECCO* [DOI:10.1145/3712256.3726380](https://doi.org/10.1145/3712256.3726380)
+- HAMD (2026): Cubic portfolio benchmark and dedicated solver. [arXiv:2603.15947](https://arxiv.org/abs/2603.15947)
+- OR-Library BQP: Unconstrained quadratic benchmark instances. [bqpinfo](https://people.brunel.ac.uk/~mastjjb/jeb/orlib/bqpinfo.html)
+- QOBLIB: Open benchmark library for quantum/combinatorial optimization. [qoblib.zib.de](https://qoblib.zib.de)
