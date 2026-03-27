@@ -38,7 +38,7 @@ Select items to maximize total value under a weight capacity constraint -- but i
 | SA | CPU | -- | 44/52 | 1800s per instance |
 | Tabu Search | CPU | -- | 42/52 | 1800s per instance |
 
-> Comparison data from [Queiroz et al. 2025 (GECCO)](https://doi.org/10.1145/3712256.3726380). Fujitsu DA and all baselines use **1800 seconds (30 minutes) per instance**. Our solver finishes all 52 instances in under 9 minutes combined. DA-QUBO uses quadratization and loses 4 instances; our native cubic solver does not.
+> Comparison data from [Queiroz et al. 2025 (GECCO)](https://doi.org/10.1145/3712256.3726380).Fujitsu DA benchmark baselines were evaluated using a standardized computational budget of 1,800 seconds (30 minutes) per instance.**. Our solver finishes all 52 instances in under 9 minutes combined. DA-QUBO uses quadratization and loses 4 instances; our native cubic solver does not.
 
 **Full per-instance results:** [`results/paper_table.csv`](results/paper_table.csv)
 
