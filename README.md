@@ -14,20 +14,18 @@ Most optimization solvers today only handle **pairwise (2-body) interactions** -
 
 ### Why not just use a quantum annealer?
 
-Quantum annealers (D-Wave, Fujitsu Digital Annealer, IBM QUBO hardware) and most quantum-inspired solvers have a **fundamental architectural constraint: they only accept QUBO input**. This means any problem with cubic or higher-order terms *must* be converted to QUBO before it can be solved -- you have no choice, regardless of how much you pay.
+Quantum annealers (D-Wave, Fujitsu Digital Annealer, and most quantum-inspired hardware) have a **fundamental architectural constraint: they only accept QUBO input**. Any problem with cubic or higher-order terms *must* be converted before it can run -- no exceptions, regardless of hardware cost.
 
-Our solver is software-native. This means:
+Our solver is software-native, which changes the picture in two ways:
 
-1. **No forced conversion.** The cubic structure of your problem is preserved end-to-end. The solver evaluates cubic interactions directly -- no auxiliary variables, no approximation overhead.
+**1. No forced conversion.** The cubic structure of your problem is preserved end-to-end. The solver evaluates cubic interactions directly -- no auxiliary variables, no approximation overhead.
 
-2. **Problem-specific customization.** Because the solver is not a fixed hardware chip, it can be **specialized and tuned for your specific problem**. For example:
-   - The knapsack variant uses weight-matching move operators that preserve feasibility natively -- the search never wastes time on infeasible states.
-   - The portfolio variant exploits the equality constraint (pick exactly K assets) with dedicated swap moves.
-   - Constraint handling is coded directly into the search, not bolted on as penalties that the hardware must interpret.
+**2. The algorithm itself can be modified for your problem.** A quantum chip runs the same fixed annealing process on every problem. Our solver is a framework that is actively adapted per problem class:
+- For CKP (constrained cubic knapsack), the breakthrough came from **integrating a Branch & Bound subroutine** directly into the GPU search -- something impossible on fixed hardware. This is the reason we match Fujitsu DA on CKP with a $400 GPU while DA-QUBO (which must quadratize) loses 4 out of 52 instances.
+- For cubic portfolio optimization, dedicated swap moves exploit the equality constraint (pick exactly K assets) natively.
+- For unconstrained problems (QUBO/BQP, MaxCut), graph problems (MIS), and others: each was adapted in **under one day** from the CKP prototype, and still produces competitive results across all tested benchmarks.
 
-3. **Algorithm-level adaptability.** When a problem has a known structure (e.g., sparse interactions, specific constraint topology), we can exploit it. A quantum chip runs the same annealing schedule regardless of problem structure.
-
-The result: our $400 GPU outperforms a $1,000,000 quantum-inspired accelerator on the cubic knapsack benchmark -- not because the GPU is faster in raw FLOPS, but because the algorithm is tailored to the problem.
+The result: problem-specific algorithmic design on commodity hardware outperforms expensive fixed-architecture machines on the benchmarks where direct comparison is available. We believe this adaptability will translate to strong performance on additional problem domains -- though we are honest that we have not tested everything, and some problem structures will suit this approach better than others.
 
 ### How much does it cost?
 
@@ -125,6 +123,14 @@ Find the largest set of nodes in a graph such that no two are connected. A funda
 
 - [`instances/CKP/`](instances/CKP/) -- 52 CKP instances (Forrester & Waddell 2022)
 - [`instances/HAMD/`](instances/HAMD/) -- Cubic portfolio instances (from HAMD benchmark)
+
+---
+
+## A Note on Technical Details
+
+The core algorithms and implementation are part of an ongoing paper submission and patent application. For this reason, source code and algorithmic specifics are not publicly disclosed at this time. This repository shares only benchmark results and problem instances.
+
+If you are a researcher or organization interested in collaboration or evaluation, feel free to reach out directly.
 
 ---
 
