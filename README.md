@@ -42,7 +42,7 @@ For comparison, the only other solver that matches our results on cubic problems
 Select items to maximize total value under a weight capacity constraint -- but item values include **3-way synergies** (e.g., items A+B+C together have bonus value). This is the only published benchmark for constrained cubic optimization.
 
 - **Source:** [Forrester & Waddell 2022](https://doi.org/10.1007/s10878-021-00816-5), 52 instances, n=40 to 200 items
-- **Our result:** All 52 best-known solutions matched, **6 new best-known solutions discovered**
+- **Our result:** All 52 best-known solutions matched (ties Fujitsu DA-HUBO)
 - **Time:** **8.6 minutes total** for all 52 instances (max 60s per instance)
 
 | Solver | Hardware | Cost | Matched | Time Budget |
@@ -53,7 +53,7 @@ Select items to maximize total value under a weight capacity constraint -- but i
 | SA | CPU | -- | 44/52 | 1800s per instance |
 | Tabu Search | CPU | -- | 42/52 | 1800s per instance |
 
-> Comparison data from [Queiroz et al. 2025 (GECCO)](https://doi.org/10.1145/3712256.3726380).Fujitsu DA benchmark baselines were evaluated using a standardized computational budget of 1,800 seconds (30 minutes) per instance.**. Our solver finishes all 52 instances in under 9 minutes combined. DA-QUBO uses quadratization and loses 4 instances; our native cubic solver does not.
+> Comparison data from [Queiroz et al. 2025 (GECCO)](https://doi.org/10.1145/3712256.3726380). Fujitsu DA benchmark baselines were evaluated using a standardized computational budget of 1,800 seconds (30 minutes) per instance. Our solver finishes all 52 instances in under 9 minutes combined. DA-QUBO uses quadratization and loses 4 instances; our native cubic solver does not.
 
 **Full per-instance results:** [`results/paper_table.csv`](results/paper_table.csv)
 
@@ -64,7 +64,7 @@ Select items to maximize total value under a weight capacity constraint -- but i
 **What is this?**
 Choose K assets from n candidates to minimize portfolio risk, where risk includes **3-asset co-skewness** (cubic terms). This models real financial risk that traditional mean-variance (Markowitz) frameworks cannot capture.
 
-**Baseline:** [HAMD (arXiv:2603.15947)](https://arxiv.org/abs/2603.15947) -- a dedicated optimizer designed specifically for this problem. Their SA/Tabu baselines use quadratization (n -> 5n variables), resulting in 80-88% worse solutions.
+**Baseline:** [HAMD (arXiv:2603.15947)](https://arxiv.org/abs/2603.15947) -- a dedicated optimizer designed specifically for this problem. Their SA/Tabu baselines use quadratization (n → 5n variables), resulting in severely degraded solutions (see table below).
 
 | Scale | HAMD (dedicated) | SA/Tabu (quadratized) | **Ours** | Our Time |
 |-------|------------------|----------------------|----------|----------|
@@ -73,7 +73,7 @@ Choose K assets from n candidates to minimize portfolio risk, where risk include
 | 500 assets, pick 100 | 13,949.80 | 34,454.01 | **13,950.07** (match) | 33s |
 | 1000 assets, pick 200 | 101,294.43 | 190,598.71 | **101,294.43** (exact match) | 276s |
 
-> Lower = better (portfolio risk). HAMD uses a **60-second CPU budget** per instance. SA/Tabu quadratize the cubic objective (n -> 5n variables), inflating problem size and producing results 60-88% worse. Our solver matches HAMD's dedicated optimizer at every scale while being a general-purpose HUBO solver.
+> Lower = better (portfolio risk). HAMD uses a **60-second CPU budget** per instance. SA/Tabu quadratize the cubic objective (n → 5n variables), inflating problem size and producing drastically worse results at every scale. Our solver matches HAMD's dedicated optimizer while being a general-purpose HUBO solver.
 
 ---
 
